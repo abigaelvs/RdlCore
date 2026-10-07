@@ -2,13 +2,13 @@
   <Target Name="ILRepacker" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'"> 
     <ItemGroup> 
       <InputAssemblies Include="$(TargetPath)" /> 
-      <InputAssemblies Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.Extension)' == '.dll' and !$([System.String]::Copy('%(ReferenceCopyLocalPaths.Filename)').StartsWith('System.ServiceModel')) and '%(ReferenceCopyLocalPaths.Filename)' != 'Microsoft.ReportViewer.Common' and !$([System.String]::Copy('%(ReferenceCopyLocalPaths.Identity)').Contains('\runtimes\'))" /> 
+      <InputAssemblies Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.Extension)' == '.dll' and !$([System.String]::Copy('%(ReferenceCopyLocalPaths.Filename)').StartsWith('System.ServiceModel')) and '%(ReferenceCopyLocalPaths.Filename)' != 'Microsoft.ReportViewer.Common' and !$([System.String]::Copy('%(ReferenceCopyLocalPaths.Identity)').Contains('\runtimes\')) and !$([System.String]::Copy('%(ReferenceCopyLocalPaths.Identity)').Contains('/runtimes/'))" /> 
     </ItemGroup> 
 
     <ILRepack 
         AllowDuplicateResources="false" 
         DebugInfo="true"
-        Internalize="true" 
+        Internalize="true" KeyFile="$(AssemblyOriginatorKeyFile)" 
         ExcludeInternalizeSerializable="true" 
         Parallel="true" 
         InputAssemblies="@(InputAssemblies)" 
